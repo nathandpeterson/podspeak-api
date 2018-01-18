@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "dev": "nodemon main"
+    "dev": "nodemon main",
+    "knex": "knex"
   },
   "author": "Nathan Peterson",
   "license": "ISC",
@@ -16,8 +17,10 @@
     "express-graphql": "^0.6.11",
     "feedparser": "^2.2.8",
     "graphql": "^0.12.3",
+    "knex": "^0.14.2",
     "morgan": "^1.9.0",
     "nodemon": "^1.14.11",
+    "pg": "^7.4.1",
     "request": "^2.83.0"
   }
 }
