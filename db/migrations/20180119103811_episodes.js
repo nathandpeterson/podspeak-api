@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
         table.string('description').notNullable().defaultsTo('')
         table.text('pub_date').notNullable().defaultsTo('')
         table.string('audio_URL').notNullable().defaultsTo('')
-        table.string('audio_length').notNullable().defaultsTo('')
+        table.string('duration').notNullable().defaultsTo('')
         table.timestamps(true, true)
       })
 }
