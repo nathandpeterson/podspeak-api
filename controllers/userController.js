@@ -1,22 +1,24 @@
 const userModel = require('../models/userModel')
 
 class UserController {
-    static getAll(req, res, next){
-        console.log('GETALLUSERS')
-        return res.status(200).json({msg: 'get all users'})
+    static async getAll(req, res, next){
+        const response = await userModel.getAll()
+        return res.status(200).json(response)
     }
 
-    static getOne(req, res, next){
-        console.log('GETONEUSER', req.params)
-        return res.status(200).json({msg: 'get one users'})
+    static async getOne(req, res, next){
+        const response = await userModel.getOne(req.params.id)
+        return res.status(200).json({response})
     }
-    static create(req, res, next){
-        console.log('CREATE USER')
-        return res.status(201).json({msg: `you created a user`})
+
+    static async create(req, res, next){
+        const response = await userModel.create(req.body)
+        return res.status(201).json(response)
     }
-    static update(req, res, next){
-        console.log('UPDATE USER')
-        return res.status(201).json({msg: `you updated a user`})
+
+    static async update(req, res, next){
+        const response = await userModel.update(req.params.id, req.body)
+        return res.status(201).json({response})
     }
 }
 

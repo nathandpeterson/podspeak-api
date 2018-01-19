@@ -1,16 +1,17 @@
+const db = require('../db/knex.js')
 
 class UserModel {
     static getAll(){
-        console.log('GETALL MODEL')
+        return db('users')
     }
     static getOne(id){
-        console.log(`Get ${id}!!!!`)
+       return db('users').where({id}).first()
     }
-    static update(data){
-        console.log(`Update user with data ${data}`)
+    static update(id, data){
+        return db('users').where({id}).update(data)
     }
     static create(data){
-        console.log(`create user with profile ${data}`)
+        return db('users').insert(data)
     }
 }
 
