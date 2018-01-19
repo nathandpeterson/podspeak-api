@@ -13,6 +13,12 @@ class UserModel {
     static create(data){
         return db('users').insert(data)
     }
+    static userExists(data) {
+        // Check and see if a user exists
+        const { email } = data
+        return db('users').where({email})
+        // If no user, send them to a signup form
+    }
 }
 
 module.exports = UserModel
