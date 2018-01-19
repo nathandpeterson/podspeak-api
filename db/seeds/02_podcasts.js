@@ -48,5 +48,9 @@ exports.seed = function(knex, Promise) {
           latest_pub_date: 'Wed, 17 Jan 2018 05:01:00 -0000',
           website: 'https://www.recode.net/podcasts/'},
       ])
+    }).then(() => {
+      return knex.raw(
+        `SELECT setval('podcasts_id_seq', (SELECT MAX(id) FROM podcasts));`
+      )
     })
 }

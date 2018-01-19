@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node main.js",
     "dev": "nodemon main",
-    "knex": "knex"
+    "knex": "knex",
+    "refresh": "dropdb pod_dev && createdb pod_dev",
+    "reseed": "knex migrate:latest && knex seed:run"
   },
   "author": "Nathan Peterson",
   "license": "ISC",

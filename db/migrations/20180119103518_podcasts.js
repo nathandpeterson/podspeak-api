@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     return knex.schema.createTable('podcasts', table => {
         table.increments()
         table.string('title').notNullable().defaultsTo('')
-        table.string('image_URL').notNullable().defaultsTo('')
+        table.text('image_URL').notNullable().defaultsTo('')
         table.text('description').notNullable().defaultsTo('')
         table.string('rss_feed').notNullable().defaultsTo('')
         table.string('latest_pub_date').notNullable().defaultsTo('')

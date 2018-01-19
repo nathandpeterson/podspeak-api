@@ -34,5 +34,9 @@ exports.seed = function(knex, Promise) {
           audio_URL: 'http://rss.art19.com/episodes/a5fe1e27-0fc8-4134-a007-6bd2a1c4c988.mp3',
           duration: '01:16:43'}
       ])
+    }).then(() => {
+      return knex.raw(
+        `SELECT setval('episodes_id_seq', (SELECT MAX(id) FROM episodes));`
+      )
     })
 }

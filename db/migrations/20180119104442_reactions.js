@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
         table.integer('user_id').notNullable()
         table.foreign('user_id').references('users.id')
         table.integer('reaction_id')
-        table.foreign('reaction_id').references('reactions.id')
+       
         table.integer('episode_id').notNullable()
         table.foreign('episode_id').references('episodes.id')
         table.string('episode_timestamp').notNullable().defaultsTo('')
