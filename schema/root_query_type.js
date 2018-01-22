@@ -1,7 +1,9 @@
 const graphql = require('graphql')
 const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID } = graphql
 const userModel = require('../models/userModel')
+const podcastModel = require('../models/podcastModel')
 const UserType = require('./user_type')
+const PodcastType = require('./podcast_type')
 
 const RootQueryType = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -18,6 +20,19 @@ const RootQueryType = new GraphQLObjectType({
           resolve(parentValue, args){
             return userModel.getOne(parentValue.id)
           }
+        },
+        podcasts: {
+            type: new GraphQLList(PodcastType),
+            resolve(parentValue, args){
+                return podcastModel.getAll()
+            }
+        },
+        podcast: {
+            type: PodcastType,
+            args: { id : { type: new GraphQLNonNull(GraphQLID)}},
+            resolve(parentValue, args){
+                return podcastModel.getOne(parentValue.id)
+            }
         }
   })
 })

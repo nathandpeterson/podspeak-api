@@ -15,7 +15,7 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: {},
+    connection: '',
   },
   migrations: {
     directory: path.join(__dirname, 'db', 'migrations')

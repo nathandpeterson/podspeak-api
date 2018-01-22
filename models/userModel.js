@@ -11,7 +11,8 @@ class UserModel {
         return db('users').where({id}).update(data)
     }
     static create(data){
-        return db('users').insert(data)
+        console.log(data)
+        // return db('users').insert(data)
     }
     static userExists(data) {
         // Check and see if a user exists
