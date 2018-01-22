@@ -4,13 +4,14 @@ const userModel = require('../models/userModel')
 const podcastModel = require('../models/podcastModel')
 const UserType = require('./user_type')
 const PodcastType = require('./podcast_type')
+const authService = require('../authService')
 
 const RootQueryType = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: () => ({
       users: {
           type: new GraphQLList(UserType),
-          resolve(parentValue, args){
+          resolve(parentValue, args, context){
               return userModel.getAll()
           }
       },
@@ -23,14 +24,15 @@ const RootQueryType = new GraphQLObjectType({
         },
         podcasts: {
             type: new GraphQLList(PodcastType),
-            resolve(parentValue, args){
+            resolve(parentValue, args, ctx){
                 return podcastModel.getAll()
             }
         },
         podcast: {
             type: PodcastType,
-            args: { id : { type: new GraphQLNonNull(GraphQLID)}},
-            resolve(parentValue, args){
+            args: { id : { type: new GraphQLNonNull(GraphQLID)} },
+            resolve(parentValue, args, ctx){
+                
                 return podcastModel.getOne(parentValue.id)
             }
         }

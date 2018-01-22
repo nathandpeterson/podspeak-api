@@ -10,6 +10,24 @@ const morgan = require('morgan')
 process.env.NODE_ENV ? null : app.use(morgan('dev'))
 app.disable('x-powered-by')
 
+var jwt = require('express-jwt')
+var jwks = require('jwks-rsa')
+
+var jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: "https://natperson.auth0.com/.well-known/jwks.json"
+  }),
+  audience: 'https://podspeak.herokuapp.com',
+  issuer: "https://natperson.auth0.com/",
+  algorithms: ['RS256']
+})
+
+// just a sample route to show the check
+app.get('/protected', jwtCheck)
+
 const expressGraphQL = require('express-graphql')
 
 const schema = require('./schema/schema')
