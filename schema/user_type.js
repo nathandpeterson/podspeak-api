@@ -20,7 +20,7 @@ const UserType = new GraphQLObjectType({
         active: { type : GraphQLBoolean },
         privacy: { type : GraphQLInt},
         // This will query the users podcasts?
-        podcasts: { type: GraphQLString }
+        // podcasts: { type: new GraphQLList }
     })
 })
 
