@@ -8,10 +8,13 @@ class UserModel {
     static getOne(id){
         return db('users').where({id}).first()    
     }
+    static async getWithEmail(email){
+        return db('users')
+    }
     static checkEmail(email){
         return db('users').where({email}).first()
             .then(res => {
-                return res ? true : false
+                return res ? res : false
             })
     }
     static update(id, data){
@@ -28,10 +31,17 @@ class UserModel {
         hashedData.active = true
         return db('users').insert(hashedData).returning('*')
     }
-    static verifyEmail(email) {
-        // Check and see if a user exists
-        return db('users').where({email}).first()
-            .then(({email}) => email)
+    static async verify({email, password}) {
+        // Check and see if a user exists, checkEmail returns user data if true, undefined if false
+       const userData= await this.checkEmail(email)
+       if(!userData) { return {message: 'No such user with that email'} }
+       else {
+        const { hashed_password } = userData
+        const verification = await auth.verifyPassword(password, hashed_password)
+        if(!verification) { return {message: 'The password is incorrect'}}
+        const token = await auth.newToken(userData)
+        return token
+       }
         // If no user, send them to a signup form
     }
 }

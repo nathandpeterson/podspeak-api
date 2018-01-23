@@ -28,7 +28,6 @@ const mutation = new GraphQLObjectType({
                 return userModel.create(args, req)
                 // This returns the object, but nothing gets into graphQL
                 // Should re-route use and grant jwt
-                    .then(result => result)
             }
         },
         login: {
@@ -37,13 +36,11 @@ const mutation = new GraphQLObjectType({
                 email: {type: GraphQLString},
                 password: {type: GraphQLString}
             },
-            resolve(parentValue, {email, password}, req){
-                // This call just returns true if the email exists in db
-                // I can't figure out why it won't return the email to frontend
-                return userModel.verifyEmail(email)
-                // This call checks the password... Won't work because its below return...
-                auth.login({email, password})
-                    .then( result => console.log('parentValue...',parentValue) )
+            async resolve(parentValue, {email, password}, req){
+                // Returns a token if password is correct and user is in db
+                const token = await userModel.verify({email, password})
+                return token
+                // attach token to headers
                 }
             }
         

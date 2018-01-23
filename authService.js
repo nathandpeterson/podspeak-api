@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const userModel = require('./models/userModel')
+const secret = process.env.TOKEN_SECRET || '$2a$11$Z4o/N3IeRF6kfNKKaM5j4esHDq55Q4Eoc7.ruY2WH5wM1kZVdqaxe'
+
 
 class authService {
    
@@ -11,13 +12,25 @@ class authService {
         return verification
     }
     static async signup(data){
-        console.log('data with plaintext', data)
         const hashed_password = await bcrypt.hash(data.password, 11)
-        console.log('hashed_password', hashed_password)
         const dataWithHashed = {...data, hashed_password}
-        console.log('data with hashed', dataWithHashed)
         delete dataWithHashed.password
         return dataWithHashed
+    }
+    static async verifyPassword(plain_password, hashed_password){
+        let verification = await bcrypt.compare(plain_password, hashed_password)
+        return verification
+    }
+    static async newToken(data){
+        const frontendData = {id: data.id, first_name: data.first_name, email: data.email}
+        let tokenHash = jwt.sign( frontendData, secret, {expiresIn: '1000h'})
+        const token = `Bearer: ${tokenHash}`
+        return token
+    }
+    static verifyToken(token){
+        // I haven't tested this just yet...
+        const result = jwt.verify(token, secret)
+        return result ? true : false
     }
 }
 
