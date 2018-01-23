@@ -1,22 +1,20 @@
-var jwt = require('express-jwt')
-var jwks = require('jwks-rsa')
-
-var jwtCheck = jwt({
-  secret: jwks.expressJwtSecret({
-      cache: true,
-      rateLimit: true,
-      jwksRequestsPerMinute: 5,
-      jwksUri: "https://natperson.auth0.com/.well-known/jwks.json"
-  }),
-  audience: 'https://podspeak.herokuapp.com',
-  issuer: "https://natperson.auth0.com/",
-  algorithms: ['RS256']
-})
-
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const userModel = require('./models/userModel')
 
 class authService {
-    static isValid(token){ 
-        console.log('nope')
+    static async isValidEmail(email){ 
+        const verifyEmail = await userModel.verifyEmail(email)
+        return verifyEmail
+    }
+    static async login({email, password}){
+        const { hashed_password } = await userModel.checkPassword(email)
+        if(!hashed_password) return false
+        const verification = await bcrypt.compare(password, hashed_password)
+        return verification
+    }
+    static async signup(data){
+
     }
 }
 

@@ -5,19 +5,25 @@ class UserModel {
         return db('users')
     }
     static getOne(id){
-       return db('users').where({id}).first()
+        return db('users').where({id}).first()    
+    }
+    static checkPassword(email){
+        return db('users').where({email}).first()
+            .then(res => !res ? 'nope' : res)
     }
     static update(id, data){
         return db('users').where({id}).update(data)
     }
     static create(data){
         console.log(data)
+        return db('users').insert({data})
+        // verify that the data is complete and return
         // return db('users').insert(data)
     }
-    static userExists(data) {
+    static verifyEmail(email) {
         // Check and see if a user exists
-        const { email } = data
-        return db('users').where({email})
+        return db('users').where({email}).first()
+            .then(({email}) => email)
         // If no user, send them to a signup form
     }
 }

@@ -4,8 +4,8 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return knex('users').insert([
          {id: 1, 
-          email: 'nathan@example.com',
-          hashed_password: 'password',
+          email: 'nathan@gmail.com',
+          hashed_password: '$2a$10$7a6XUbAtrlqlRNEK9eXBVuYWEhgdb1VMQZ7DB7JvefV9Skvi74BWO',
           first_name: 'Nathan',
           last_name: 'Peterson',
           avatar: '🦁',
@@ -13,7 +13,7 @@ exports.seed = function(knex, Promise) {
           privacy: 0},
           {id: 2, 
           email: 'galen@example.com',
-          hashed_password: 'password',
+          hashed_password: '$2a$10$7a6XUbAtrlqlRNEK9eXBVuYWEhgdb1VMQZ7DB7JvefV9Skvi74BWO',
           first_name: 'Galen',
           last_name: 'Longstreth',
           avatar: '🦄',
@@ -21,7 +21,7 @@ exports.seed = function(knex, Promise) {
           privacy: 2},
           {id: 3, 
           email: 'ivan@example.com',
-          hashed_password: 'password',
+          hashed_password: '$2a$10$7a6XUbAtrlqlRNEK9eXBVuYWEhgdb1VMQZ7DB7JvefV9Skvi74BWO',
           first_name: 'Ivan',
           last_name: 'Johnson',
           avatar: '🧟‍',
