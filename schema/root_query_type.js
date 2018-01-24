@@ -19,7 +19,7 @@ const RootQueryType = new GraphQLObjectType({
           type: UserType,
           args: { id : { type: new GraphQLNonNull(GraphQLID)} },
           resolve(parentValue, args){
-            return userModel.getOne(parentValue.id)
+            return userModel.getOne(args.id)
           }
         },
         podcasts: {
@@ -37,7 +37,7 @@ const RootQueryType = new GraphQLObjectType({
             type: PodcastType,
             args: { id : { type: new GraphQLNonNull(GraphQLID)} },
             resolve(parentValue, args, ctx){
-                return podcastModel.getOne(parentValue.id)
+                return podcastModel.getOne(args.id)
             }
         }
   })

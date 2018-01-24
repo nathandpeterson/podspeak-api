@@ -36,11 +36,11 @@ class UserModel {
        const userData= await this.checkEmail(email)
        if(!userData) { return {error: 'No user exists with that email'} }
        else {
-        const { hashed_password } = userData
+        const { hashed_password, id } = userData
         const verification = await auth.verifyPassword(password, hashed_password)
         if(!verification) { return {error: 'The password is incorrect'}}
         const token = await auth.newToken(userData)
-        return {token}
+        return {...userData, token}
        }
         // If no user, send them to a signup form
     }

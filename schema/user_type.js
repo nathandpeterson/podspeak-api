@@ -1,12 +1,16 @@
 const graphql = require('graphql')
+const PodcastType = require('./podcast_type')
+const podcastModel = require('../models/podcastModel')
 const UserModel = require('../models/userModel')
 const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
     GraphQLInt,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLList
 } = graphql
+
 
 
 const UserType = new GraphQLObjectType({
@@ -20,9 +24,13 @@ const UserType = new GraphQLObjectType({
         active: { type : GraphQLBoolean },
         privacy: { type : GraphQLInt},
         token: { type : GraphQLString },
-        error: { type: GraphQLString}
-        // This will query the users podcasts?
-        // podcasts: { type: new GraphQLList }
+        error: { type: GraphQLString},
+        podcasts: { 
+            type: new GraphQLList(PodcastType),
+        resolve(parentValue, args){
+            return podcastModel.getForUser(parentValue.id)
+         }
+        }
     })
 })
 

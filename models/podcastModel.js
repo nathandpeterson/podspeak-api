@@ -13,6 +13,12 @@ class PodcastModel {
     static update(data){
         return db('users').where({id}).update(data)
     }
+    static async getForUser(user_id){
+        return db('podcasts')
+                .join('user_podcast', 'podcasts.id', 'user_podcast.podcast_id')
+                .where({user_id})
+                
+    }
 
 }
 

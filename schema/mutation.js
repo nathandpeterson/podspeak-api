@@ -22,13 +22,10 @@ const mutation = new GraphQLObjectType({
                 first_name: { type : GraphQLString },
                 last_name: { type : GraphQLString },
                 avatar: { type : GraphQLString },
-                // active: { type : GraphQLBoolean },
                 privacy: { type : GraphQLInt}
             },
             resolve(parentValue, args, req){
                 return userModel.create(args, req)
-                // This returns the object, but nothing gets into graphQL
-                // Should re-route use and grant jwt
             }
         },
         login: {
@@ -38,18 +35,20 @@ const mutation = new GraphQLObjectType({
                 password: {type: GraphQLString},
                 token: { type: GraphQLString},
                 error: { type: GraphQLString},
-                // Needs a method to resolve ids with email?
-                id: { type : GraphQLID}
+                id: { type : GraphQLID},
+                first_name: { type : GraphQLString },
+                last_name: { type : GraphQLString },
+                avatar: { type : GraphQLString },
+                active: { type : GraphQLBoolean },
+                privacy: { type : GraphQLInt}
             },
             resolve(parentValue, {email, password}, ctx){
                 // Returns a token if password is correct and user is in db
                 return userModel.verify({email, password})
                     .then(verificationResult => {
-                        const { error } = verificationResult
+                        const { token, error } = verificationResult
                         // Checks for error on the result and then appends either error or token to response
-                        const response = verificationResult.token ? { email, token: verificationResult.token } : { email, error }
-                        console.log('just before sending back',response)
-                        return response
+                        return token ? { ...verificationResult, token } : { error }
                     }).catch(err => {
                         console.log('error catch', err)
                         return {message : err}
