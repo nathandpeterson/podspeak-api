@@ -11,7 +11,7 @@ const RootQueryType = new GraphQLObjectType({
   fields: () => ({
       users: {
           type: new GraphQLList(UserType),
-          resolve(parentValue, args, context){
+          resolve(parentValue, args, ctx){
               return userModel.getAll()
           }
       },
@@ -24,7 +24,12 @@ const RootQueryType = new GraphQLObjectType({
         },
         podcasts: {
             type: new GraphQLList(PodcastType),
-            resolve(parentValue, args, ctx){
+            async resolve(parentValue, args, ctx){
+                if(ctx.headers.authorization) {
+                    const res = await authService.verifyToken(ctx.headers.authorization)
+                    console.log('after the call to authservices', res)
+                }
+                console.log(ctx.headers.authorization)
                 return podcastModel.getAll()
             }
         },
@@ -32,7 +37,6 @@ const RootQueryType = new GraphQLObjectType({
             type: PodcastType,
             args: { id : { type: new GraphQLNonNull(GraphQLID)} },
             resolve(parentValue, args, ctx){
-                
                 return podcastModel.getOne(parentValue.id)
             }
         }

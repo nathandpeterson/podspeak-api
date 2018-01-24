@@ -27,10 +27,10 @@ class authService {
         const token = `Bearer: ${tokenHash}`
         return token
     }
-    static verifyToken(token){
-        // I haven't tested this just yet...
-        const result = jwt.verify(token, secret)
-        return result ? true : false
+    static async verifyToken(token){
+        const justToken = token.slice(8)
+        const result = await jwt.verify(justToken, secret)
+        return result        
     }
 }
 

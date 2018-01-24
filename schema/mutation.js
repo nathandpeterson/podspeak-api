@@ -3,7 +3,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLBoolean,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLID
 } = graphql
 
 const UserType = require('./user_type')
@@ -34,13 +35,23 @@ const mutation = new GraphQLObjectType({
             type: UserType,
             args: {
                 email: {type: GraphQLString},
-                password: {type: GraphQLString}
+                password: {type: GraphQLString},
+                token: { type: GraphQLString},
+                // Needs a method to resolve ids with email?
+                id: { type : GraphQLID}
             },
-            async resolve(parentValue, {email, password}, req){
+            resolve(parentValue, {email, password}, ctx){
+                console.log(ctx.headers)
                 // Returns a token if password is correct and user is in db
-                const token = await userModel.verify({email, password})
-                return token
-                // attach token to headers
+                return userModel.verify({email, password})
+                    .then(token => {
+                        console.log('token?', token)
+                        // Bad error handling
+                        if(token.message) return
+                        const response = { email, token }
+                        console.log('response', response)
+                        return response
+                    })
                 }
             }
         
