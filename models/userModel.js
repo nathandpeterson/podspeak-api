@@ -29,7 +29,15 @@ class UserModel {
         let hashedData = await auth.signup(data)
         // Adds active propery to data
         hashedData.active = true
-        return db('users').insert(hashedData).returning('*')
+        return db('users').insert(hashedData)
+            .then(()=> {
+                return db('users').where({email:hashedData.email})
+                .then( async userData => {
+                    delete userData.hashed_password
+                    const token = await auth.newToken(userData)
+                    return {...userData, token}
+                })
+            })
     }
     static async verify({email, password}) {
         // Check and see if a user exists, checkEmail returns user data if true, undefined if false
