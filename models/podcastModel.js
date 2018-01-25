@@ -16,10 +16,8 @@ class PodcastModel {
     static async getForUser(user_id){
         return db('podcasts')
                 .join('user_podcast', 'podcasts.id', 'user_podcast.podcast_id')
-                .where({user_id})
-                
+                .where({user_id})  
     }
-
 }
 
 module.exports = PodcastModel
