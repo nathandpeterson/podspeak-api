@@ -33,6 +33,7 @@ class UserModel {
             .then(()=> {
                 return db('users').where({email:hashedData.email})
                 .then( async userData => {
+                    userData = userData[0]
                     delete userData.hashed_password
                     const token = await auth.newToken(userData)
                     return {...userData, token}

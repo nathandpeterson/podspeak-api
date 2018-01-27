@@ -26,9 +26,9 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parentValue, args, req){
                 return userModel.create(args, req)
-                    .then(response => {
-                        console.log(response)
-                        return response
+                    .then(userInfo => {
+                        console.log('just before sending response', userInfo)
+                        return userInfo
                     })
             }
         },
