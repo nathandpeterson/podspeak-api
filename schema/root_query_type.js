@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLInt } = graphql
+const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLInt, GraphQLString } = graphql
 const userModel = require('../models/userModel')
 const podcastModel = require('../models/podcastModel')
 const episodeModel = require('../models/episodeModel')
@@ -7,6 +7,7 @@ const reactionModel = require('../models/reactionModel')
 const UserType = require('./user_type')
 const PodcastType = require('./podcast_type')
 const EpisodeType = require('./episode_type')
+const NewPodcastType = require('./new_podcast_type')
 const ReactionType = require('./reaction_type')
 const authService = require('../authService')
 
@@ -71,6 +72,13 @@ const RootQueryType = new GraphQLObjectType({
             args: { id : { type: new GraphQLNonNull(GraphQLID)}},
             resolve(parentValue, args, ctx){
                 return reactionModel.getOne(args.id)
+            }
+        },
+        newPod :{
+            type: NewPodcastType,
+            args: { query: { type : new GraphQLNonNull(GraphQLString)}},
+            resolve(parentValue, args){
+                return podcastModel.discover(args.query)
             }
         }
   })

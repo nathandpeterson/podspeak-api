@@ -6,8 +6,8 @@ exports.up = function(knex, Promise) {
         table.text('image_URL').notNullable().defaultsTo('')
         table.text('description').notNullable().defaultsTo('')
         table.string('rss_feed').notNullable().defaultsTo('')
-        table.string('latest_pub_date').notNullable().defaultsTo('')
-        table.string('website').notNullable().defaultsTo('')
+        table.string('latest_pub_date').defaultsTo('')
+        table.string('website').defaultsTo('')
         table.timestamps(true, true)
       })
 }

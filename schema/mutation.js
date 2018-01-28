@@ -8,7 +8,9 @@ const {
 } = graphql
 
 const UserType = require('./user_type')
+const PodcastType = require('./podcast_type')
 const userModel = require('../models/userModel')
+const podcastModel = require('../models/podcastModel')
 const auth = require('../authService')
 
 const mutation = new GraphQLObjectType({
@@ -59,7 +61,6 @@ const mutation = new GraphQLObjectType({
                     })
                 }
             }
-        
    }
 })
 

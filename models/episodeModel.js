@@ -8,10 +8,8 @@ const findOrCreateId = (data) => {
             if(result.length) {
                 return result[0]
             } else {
-                return db('episodes').insert(data, '*')
-                    .then(res => {
-                        return res[0]
-                    })
+            return db('episodes').insert(data, '*')
+                .then(newEpisode => newEpisode[0])
             }  
         })
 }
@@ -31,8 +29,6 @@ const chunk = (items, num) => {
     let min = num * 5 - 5
     return items.filter((item, i) => i < num * 5 && i >= min )
 }
-
-
 
 class EpisodeModel{
     static getOne(id){
