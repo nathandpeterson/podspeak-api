@@ -54,6 +54,10 @@ const RootQueryType = new GraphQLObjectType({
             args: { id : { type: new GraphQLNonNull(GraphQLID)} },
             resolve(parentValue, args, ctx){
                 return episodeModel.getOne(args.id)
+                    .then(res => {
+                        console.log('endpoint', res)
+                        return res
+                    })
             }
         },
         reactions: {

@@ -22,7 +22,12 @@ const PodcastType = new GraphQLObjectType({
         website: { type : GraphQLString },
         episodes: {type: new GraphQLList(EpisodeType),
         resolve(parentValue, args){
-            return episodeModel.getByPodcast(parentValue.id)
+            // return episodeModel.getByPodcast(parentValue.id)
+            return episodeModel.getFeed(parentValue)
+                .then(res => {
+                    console.log(res)
+                    return res
+                })
         }}
     })
 })
