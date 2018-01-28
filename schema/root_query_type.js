@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID } = graphql
+const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLInt } = graphql
 const userModel = require('../models/userModel')
 const podcastModel = require('../models/podcastModel')
 const episodeModel = require('../models/episodeModel')
@@ -38,9 +38,13 @@ const RootQueryType = new GraphQLObjectType({
         },
         podcast: {
             type: PodcastType,
-            args: { id : { type: new GraphQLNonNull(GraphQLID)} },
+            args: { id : { type: new GraphQLNonNull(GraphQLID)},
+                    page: {type: new GraphQLNonNull(GraphQLInt) } },
             resolve(parentValue, args, ctx){
-                return podcastModel.getOne(args.id)
+                return podcastModel.getOne(args.id, args.page)
+                            .then(podcast => {
+                                return {...podcast, page: args.page}
+                            })
             }
         },
         episodes: {
@@ -54,10 +58,6 @@ const RootQueryType = new GraphQLObjectType({
             args: { id : { type: new GraphQLNonNull(GraphQLID)} },
             resolve(parentValue, args, ctx){
                 return episodeModel.getOne(args.id)
-                    .then(res => {
-                        console.log('endpoint', res)
-                        return res
-                    })
             }
         },
         reactions: {

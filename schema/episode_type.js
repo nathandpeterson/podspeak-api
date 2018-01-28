@@ -6,7 +6,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
-    GraphQLList
+    GraphQLList,
+    GraphQLInt,
 } = graphql
 
 
@@ -20,9 +21,11 @@ const EpisodeType = new GraphQLObjectType({
         pub_date: { type: GraphQLString },
         audio_URL: { type : GraphQLString},
         duration: { type : GraphQLString},
+        page: {type: GraphQLInt},
         // This will fetch reactions for an episode
         reactions: {type: new GraphQLList(ReactionType),
             resolve(parentValue){
+                console.log(parentValue)
                 return reactionModel.getByEpisode(parentValue.id)
             }
         }

@@ -6,7 +6,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
-    GraphQLList
+    GraphQLList,
+    GraphQLInt
 } = graphql
 
 
@@ -20,14 +21,10 @@ const PodcastType = new GraphQLObjectType({
         image_URL: { type: GraphQLString },
         latest_pub_date: { type : GraphQLString },
         website: { type : GraphQLString },
+        page: { type: GraphQLInt},
         episodes: {type: new GraphQLList(EpisodeType),
         resolve(parentValue, args){
-            // return episodeModel.getByPodcast(parentValue.id)
             return episodeModel.getFeed(parentValue)
-                .then(res => {
-                    console.log(res)
-                    return res
-                })
         }}
     })
 })

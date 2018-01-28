@@ -2,7 +2,7 @@ const db = require('../db/knex.js')
 
 
 class PodcastModel {
-    static async getOne(id){
+    static async getOne(id, page){
         return db('podcasts').where({id}).first()
     }
     static getAll(){

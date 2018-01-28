@@ -5,11 +5,14 @@ const uuid = require('uuid')
 const findOrCreateId = (data) => {
     return db('episodes').where({podcast_id: data.podcast_id, title: data.title })
         .then(result => {
-            if(result.length) { return result[0] }
-            return db('episodes').insert(data, '*')
-                .then(res => {
-                    return res[0]
-                })
+            if(result.length) {
+                return result[0]
+            } else {
+                return db('episodes').insert(data, '*')
+                    .then(res => {
+                        return res[0]
+                    })
+            }  
         })
 }
 
@@ -23,7 +26,10 @@ const prune = (episode, podcast_id) => {
            return findOrCreateId(data)
     }
 const chunk = (items, num) => {
-    return items.filter((item, i) => i < num)
+    // Num is page number. I want five results per page.
+    // I use (5 * num) as max depth and (5 * num) -5 as min depth
+    let min = num * 5 - 5
+    return items.filter((item, i) => i < num * 5 && i >= min )
 }
 
 
@@ -36,35 +42,18 @@ class EpisodeModel{
         return db('episodes')
     }
     static getFeed(data){
-        const { rss_feed } = data
+        const { rss_feed, page } = data
         const podcast_id = data.id
-
         return feedparser.parse(rss_feed)
-                    .then(items => {
-                        // Pass page number into call
-                        // Chunk according to desired depth
-                const fiveEpisodes = chunk(items, 5)
+                    .then( items => {
+                        // chunk will filter for desired depth by taking a page number pulling five from there
+                const fiveEpisodes = chunk(items, page)
                 const data = fiveEpisodes.map(episode => prune(episode, podcast_id))
-                return data
+                        return data
                     })
     }
     static getByPodcast(podcast_id){
         return db('podcasts').where({id}).first()
-            // .then( podcast => {
-            //     const { rss_feed } = podcast
-            //     return feedparser.parse(rss_feed)
-            //         .then(items => {
-            //             // Pass page number into call
-            //             // Chunk according to desired depth
-            //     const fiveEpisodes = chunk(items, 4)
-            //     const data = fiveEpisodes.map(episode => prune(episode))
-            //     return data
-                            // Prune the chunk
-                        // Return pruned and chunked data
-                        // console.log(prune(items[0]))
-                   
-                // return podcast
-
     }
 
     static create(data){
