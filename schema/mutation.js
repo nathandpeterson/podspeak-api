@@ -67,11 +67,24 @@ const mutation = new GraphQLObjectType({
                 type: NewPodcastType,
                 args: { query: { type : new GraphQLNonNull(GraphQLString)}},
                 resolve(parentValue, args){
-                    console.log('called', args)
                     return podcastModel.discover(args.query)
                 }
+            },
+            newUserPod: {
+                type: UserType,
+                args: { id: { type: GraphQLID},
+                        podcast_id: { type: GraphQLID}
+            },
+            resolve(parentValue, args){
+                console.log('in the schema', args)
+                return podcastModel.addUserPodcast(args)
+                    .then(end => {
+                        console.log('in the end', end)
+                        return end
+                    })
             }
-   }
+        }
+    }
 })
 
 module.exports = mutation

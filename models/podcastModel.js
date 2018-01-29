@@ -21,6 +21,15 @@ class PodcastModel {
                 .join('user_podcast', 'podcasts.id', 'user_podcast.podcast_id')
                 .where({user_id})  
     }
+    static addUserPodcast({id, podcast_id}){
+        return db('user_podcast').where({user_id: id , podcast_id})
+            .then(check => {
+                return check.length ? {message: 'User is already subscribed'} : 
+                    db('user_podcast').insert({user_id: id , podcast_id}, '*')
+                        .then(res => res[0])
+            })
+    }
+
     static prune(data){
         const format =  {rss_feed: data.rss,
             image_URL: data.image,

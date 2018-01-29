@@ -26,8 +26,8 @@ const prune = (episode, podcast_id) => {
 const chunk = (items, num) => {
     // Num is page number. I want five results per page.
     // I use (5 * num) as max depth and (5 * num) -5 as min depth
-    let min = num * 5 - 5
-    return items.filter((item, i) => i < num * 5 && i >= min )
+    let min = num * 4 - 4
+    return items.filter((item, i) => i < num * 4 && i >= min )
 }
 
 class EpisodeModel{
