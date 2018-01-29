@@ -4,11 +4,13 @@ const {
     GraphQLString,
     GraphQLBoolean,
     GraphQLInt,
-    GraphQLID
+    GraphQLID,
+    GraphQLNonNull
 } = graphql
 
 const UserType = require('./user_type')
 const PodcastType = require('./podcast_type')
+const NewPodcastType = require('./new_podcast_type')
 const userModel = require('../models/userModel')
 const podcastModel = require('../models/podcastModel')
 const auth = require('../authService')
@@ -59,6 +61,14 @@ const mutation = new GraphQLObjectType({
                         console.log('error catch', err)
                         return {message : err}
                     })
+                }
+            },
+            newPod :{
+                type: NewPodcastType,
+                args: { query: { type : new GraphQLNonNull(GraphQLString)}},
+                resolve(parentValue, args){
+                    console.log('called', args)
+                    return podcastModel.discover(args.query)
                 }
             }
    }
