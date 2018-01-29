@@ -76,11 +76,28 @@ const mutation = new GraphQLObjectType({
                         podcast_id: { type: GraphQLID}
             },
             resolve(parentValue, args){
-                console.log('in the schema', args)
                 return podcastModel.addUserPodcast(args)
-                    .then(end => {
-                        console.log('in the end', end)
-                        return end
+            }
+        },
+        newSubscription: {
+            type: PodcastType,
+            args: {
+                title: { type: GraphQLString},
+                description:  { type: GraphQLString},
+                rss_feed:  { type: GraphQLString},
+                image_URL:  { type: GraphQLString},
+                user_id: { type: GraphQLID }
+            },
+            resolve(parentValue, args){
+                let podcastData = { ...args }
+                delete podcastData.user_id
+                return podcastModel.create(podcastData)
+                    .then(newPodcast => {
+                        return podcastModel.addUserPodcast(args.user_id, newPodcast.id)
+                            .then(end => {
+                                console.log('end', end)
+                                return end
+                            })
                     })
             }
         }

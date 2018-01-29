@@ -11,7 +11,8 @@ class PodcastModel {
         return db('podcasts')
     }
     static create(data){
-        return db('podcasts').insert(data)
+        return db('podcasts').insert(data, '*')
+            .then(res => res[0])
     }
     static update(data){
         return db('users').where({id}).update(data)
@@ -21,11 +22,11 @@ class PodcastModel {
                 .join('user_podcast', 'podcasts.id', 'user_podcast.podcast_id')
                 .where({user_id})  
     }
-    static addUserPodcast({id, podcast_id}){
-        return db('user_podcast').where({user_id: id , podcast_id})
+    static addUserPodcast(user_id, podcast_id){
+        return db('user_podcast').where({user_id , podcast_id})
             .then(check => {
                 return check.length ? {message: 'User is already subscribed'} : 
-                    db('user_podcast').insert({user_id: id , podcast_id}, '*')
+                    db('user_podcast').insert({user_id , podcast_id}, '*')
                         .then(res => res[0])
             })
     }
@@ -47,7 +48,6 @@ class PodcastModel {
                         "Accept": "application/json"}})
             .then(result => {
                 const { results } = result.data
-                // console.log('results', results)
                 const format = results.map(result => this.prune(result))
                 return format
             })
