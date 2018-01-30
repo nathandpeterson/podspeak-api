@@ -1,6 +1,6 @@
 const db = require('../db/knex.js')
 const feedparser = require('feedparser-promised')
-const uuid = require('uuid')
+const audioService = require('../audioService')
 
 const findOrCreateId = (data) => {
     return db('episodes').where({podcast_id: data.podcast_id, title: data.title })
@@ -33,6 +33,10 @@ const chunk = (items, num) => {
 class EpisodeModel{
     static getOne(id){
         return db('episodes').where({id}).first()
+            .then(async data=> {
+                const url = await audioService.findOrCreate(data)
+                return data
+            })
     }
     static getAll(){
         return db('episodes')
