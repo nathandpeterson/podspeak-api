@@ -1,6 +1,5 @@
 const db = require('../db/knex.js')
 const feedparser = require('feedparser-promised')
-const audioService = require('../audioService')
 
 const findOrCreateId = (data) => {
     return db('episodes').where({podcast_id: data.podcast_id, title: data.title })
@@ -33,10 +32,6 @@ const chunk = (items, num) => {
 class EpisodeModel{
     static getOne(id){
         return db('episodes').where({id}).first()
-            .then(async data=> {
-                const url = await audioService.findOrCreate(data)
-                return data
-            })
     }
     static getAll(){
         return db('episodes')
@@ -47,8 +42,8 @@ class EpisodeModel{
         return feedparser.parse(rss_feed)
                     .then( items => {
                         // chunk will filter for desired depth by taking a page number pulling five from there
-                const fiveEpisodes = chunk(items, page)
-                const data = fiveEpisodes.map(episode => prune(episode, podcast_id))
+                const fourEpisodes = chunk(items, page)
+                const data = fourEpisodes.map(episode => prune(episode, podcast_id))
                         return data
                     })
     }

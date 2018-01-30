@@ -11,8 +11,7 @@ class PodcastModel {
         return db('podcasts')
     }
     static create(data){
-        return db('podcasts').insert(data, '*')
-            .then(res => res[0])
+        return db('podcasts').insert(data, '*').first()
     }
     static update(data){
         return db('users').where({id}).update(data)
@@ -26,8 +25,7 @@ class PodcastModel {
         return db('user_podcast').where({user_id , podcast_id})
             .then(check => {
                 return check.length ? {message: 'User is already subscribed'} : 
-                    db('user_podcast').insert({user_id , podcast_id}, '*')
-                        .then(res => res[0])
+                    db('user_podcast').insert({user_id , podcast_id}, '*').first()
             })
     }
 
