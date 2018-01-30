@@ -19,13 +19,12 @@ const NewPodcastType = new GraphQLObjectType({
         image_URL: { type: GraphQLString},
         query : { type : GraphQLString},
         title: { type: GraphQLString },
+        genre: { type: GraphQLString},
         results : {type : new GraphQLList(NewPodcastType),
         resolve(parentValue, args){
-            // console.log('in the newPODCAST resolver',parentValue)
             return parentValue
+            }
         }
-     }
-        // This will fetch reactions for an episode
     })
 })
 

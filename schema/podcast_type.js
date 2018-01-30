@@ -22,6 +22,7 @@ const PodcastType = new GraphQLObjectType({
         latest_pub_date: { type : GraphQLString },
         website: { type : GraphQLString },
         page: { type: GraphQLInt},
+        genre: { type: GraphQLString},
         episodes: {type: new GraphQLList(EpisodeType),
         resolve(parentValue, args){
             return episodeModel.getFeed(parentValue)

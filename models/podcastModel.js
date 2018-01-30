@@ -1,6 +1,6 @@
 const db = require('../db/knex.js')
 const axios = require('axios')
-const unirest = require('unirest')
+const podcastGenres = require('./podcastGenres')
 
 
 class PodcastModel {
@@ -40,10 +40,11 @@ class PodcastModel {
         return format  
     }
 
-    static async discover(query){
+    static async discover(query, genre, offset){
+        const genreCodes = podcastGenres.find(podGenre => podGenre.name === genre)
         // You are going to have to let the user choose a genre
         let base = `https://listennotes.p.mashape.com/api/v1/search?&genre_ids=128offset=10&q=${query}&sort_by_date=1&type=podcast`
-        return axios.get(`https://listennotes.p.mashape.com/api/v1/search?&genre_ids=128&offset=10&q=${query}&sort_by_date=1&type=podcast`,
+        return axios.get(`https://listennotes.p.mashape.com/api/v1/search?&genre_ids=${genreCodes.parent_id}%2C${genreCodes.id}&offset=0&q=${query}&sort_by_date=1&type=podcast`,
             {headers: {"X-Mashape-Key": "TnMVWQLr0RmshISqPFpAfNyrznpVp1LQdUSjsnd7c17TB2CMmH",
                         "Accept": "application/json"}})
             .then(result => {

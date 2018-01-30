@@ -33,7 +33,7 @@ const RootQueryType = new GraphQLObjectType({
                 if(ctx.headers.authorization) {
                     const res = await authService.verifyToken(ctx.headers.authorization)
                 }
-                console.log(ctx.headers.authorization)
+                console.log('authenticate or redirect',ctx.headers.authorization)
                 return podcastModel.getAll()
             }
         },

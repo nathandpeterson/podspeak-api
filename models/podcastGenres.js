@@ -1,4 +1,4 @@
-const genres = [ { parent_id: 82, name: 'Other Games', id: 83 },
+module.exports = [ { parent_id: 82, name: 'Other Games', id: 83 },
   { parent_id: 82, name: 'Automotive', id: 84 },
   { parent_id: 82, name: 'Video Games', id: 85 },
   { parent_id: 82, name: 'Hobbies', id: 86 },

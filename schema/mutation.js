@@ -63,22 +63,19 @@ const mutation = new GraphQLObjectType({
                     })
                 }
             },
-            newPod :{
+        newPod :{
                 type: NewPodcastType,
-                args: { query: { type : new GraphQLNonNull(GraphQLString)}},
+                args: { query: { type : new GraphQLNonNull(GraphQLString)},
+                        genre: { type : new GraphQLNonNull(GraphQLString)}   
+            },
                 resolve(parentValue, args){
-                    return podcastModel.discover(args.query)
+                    return podcastModel.discover(args.query, args.genre)
+                        .then(end => {
+                            console.log('end', end)
+                            return end
+                        })
                 }
             },
-            newUserPod: {
-                type: UserType,
-                args: { id: { type: GraphQLID},
-                        podcast_id: { type: GraphQLID}
-            },
-            resolve(parentValue, args){
-                return podcastModel.addUserPodcast(args)
-            }
-        },
         newSubscription: {
             type: PodcastType,
             args: {
@@ -86,7 +83,8 @@ const mutation = new GraphQLObjectType({
                 description:  { type: GraphQLString},
                 rss_feed:  { type: GraphQLString},
                 image_URL:  { type: GraphQLString},
-                user_id: { type: GraphQLID }
+                user_id: { type: GraphQLID },
+                genre: { type: GraphQLString}
             },
             resolve(parentValue, args){
                 let podcastData = { ...args }
@@ -94,10 +92,6 @@ const mutation = new GraphQLObjectType({
                 return podcastModel.create(podcastData)
                     .then(newPodcast => {
                         return podcastModel.addUserPodcast(args.user_id, newPodcast.id)
-                            .then(end => {
-                                console.log('end', end)
-                                return end
-                            })
                     })
             }
         }
