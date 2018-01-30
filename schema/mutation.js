@@ -30,10 +30,6 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parentValue, args, req){
                 return userModel.create(args, req)
-                    .then(userInfo => {
-                        console.log('just before sending response', userInfo)
-                        return userInfo
-                    })
             }
         },
         login: {
@@ -70,10 +66,6 @@ const mutation = new GraphQLObjectType({
             },
                 resolve(parentValue, args){
                     return podcastModel.discover(args.query, args.genre)
-                        .then(end => {
-                            console.log('end', end)
-                            return end
-                        })
                 }
             },
         newSubscription: {

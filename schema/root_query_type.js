@@ -23,17 +23,19 @@ const RootQueryType = new GraphQLObjectType({
       user: {
           type: UserType,
           args: { id : { type: new GraphQLNonNull(GraphQLID)} },
-          resolve(parentValue, args){
-            return userModel.getOne(args.id)
+          async resolve(parentValue, args, ctx){
+            if(ctx.headers.authorization) {
+                const verification = await authService.verifyToken(ctx.headers.authorization)
+                return verification.id === parseInt(args.id) ? userModel.getOne(args.id) 
+                    : { error : 'You must be logged in...'}
+            } else {
+                return { error : 'You must be logged in...'}
+            }
           }
         },
         podcasts: {
             type: new GraphQLList(PodcastType),
-            async resolve(parentValue, args, ctx){
-                if(ctx.headers.authorization) {
-                    const res = await authService.verifyToken(ctx.headers.authorization)
-                }
-                console.log('authenticate or redirect',ctx.headers.authorization)
+            async resolve(parentValue, args, ctx){    
                 return podcastModel.getAll()
             }
         },

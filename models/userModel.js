@@ -24,7 +24,7 @@ class UserModel {
     static async create(data, req){
         //Checks if email is taken. True means email is taken, false it is not.
         const emailTaken = await this.checkEmail(data.email)
-        if (emailTaken) return {message: 'That email is taken'}
+        if (emailTaken) return {error: 'That email is taken'}
         // Sends to authService to hash password and delete plaintext password
         let hashedData = await auth.signup(data)
         // Adds active propery to data
