@@ -101,10 +101,6 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parentValue, args){
                 return reactionModel.create(args)
-                    .then(end => {
-                        console.log('end', end)
-                        return end
-                    })
             }
         }
     }

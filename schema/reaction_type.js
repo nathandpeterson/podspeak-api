@@ -17,10 +17,8 @@ const ReactionType = new GraphQLObjectType({
     fields: () => ({
         id: { type : GraphQLID },
         user_id: {type: GraphQLID },
-        reaction_id: {type: GraphQLID },
         episode_id: {type: GraphQLID },
         episode_timestamp: {type: GraphQLString },
-        category: { type: GraphQLInt },
         content: { type: GraphQLString},
         userInfo: {type: GraphQLString}        
     })
