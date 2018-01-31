@@ -43,10 +43,10 @@ const RootQueryType = new GraphQLObjectType({
             type: PodcastType,
             args: { id : { type: new GraphQLNonNull(GraphQLID)},
                     page: {type: new GraphQLNonNull(GraphQLInt) } },
-            resolve(parentValue, args, ctx){
-                return podcastModel.getOne(args.id, args.page)
+            resolve(parentValue, {id, page}, ctx){
+                return podcastModel.getOne(id, page)
                             .then(podcast => {
-                                return {...podcast, page: args.page}
+                                return {...podcast, page}
                             })
             }
         },
@@ -73,7 +73,6 @@ const RootQueryType = new GraphQLObjectType({
             type: ReactionType,
             args: { id : { type: new GraphQLNonNull(GraphQLID)}},
             resolve(parentValue, args, ctx){
-                console.log('... hit the rootquery', parentValue, args)
                 return reactionModel.getOne(args.id)
             }
         },

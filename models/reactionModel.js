@@ -17,11 +17,15 @@ class ReactionModel{
             })
     }
     static create(data){
-        console.log('in the model',data)
-        return db('reactions').insert(data, "*").first()
+        console.log('in create reaction model',data)
+        return db('reactions').insert(data).returning('*')
+            .then(res => {
+                console.log(res)
+                return res[0]
+            })
     
     }
-    static getByEpisode(episode_id){
+    static getByEpisode(episode_id, time){
         return db('reactions').where({episode_id})
     }
 
