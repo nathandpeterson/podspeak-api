@@ -24,8 +24,7 @@ const EpisodeType = new GraphQLObjectType({
         page: {type: GraphQLInt},
         // This will fetch reactions for an episode
         reactions: {type: new GraphQLList(ReactionType),
-            resolve(parentValue){
-                console.log(parentValue)
+            resolve(parentValue, args){
                 return reactionModel.getByEpisode(parentValue.id)
             }
         }
