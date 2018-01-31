@@ -20,7 +20,7 @@ const ReactionType = new GraphQLObjectType({
         episode_id: {type: GraphQLID },
         episode_timestamp: {type: GraphQLString },
         content: { type: GraphQLString},
-        userInfo: {type: GraphQLString}        
+        userInfo: {type: GraphQLString} 
     })
 })
 

@@ -24,33 +24,44 @@ class ReactionModel{
     }
     static getUserInfo (user_id) {
         return userModel.getOne(user_id)
-                    .then(userInfo => {
-                        let data = `${userInfo.id},${userInfo.avatar},${userInfo.first_name},${userInfo.last_name}`
-                        return data
-                    })
+            .then(userInfo => {
+                let data = `${userInfo.id},${userInfo.avatar},${userInfo.first_name},${userInfo.last_name}`
+                return data
+            })
     }
 
-    static getByEpisode(episode_id, time){
+    static filterByTimestamp(arr, timestamp) {
+        return arr.filter(item => {
+            let reactionTime = item.episode_timestamp.split(':')
+            return parseInt(timestamp) === parseInt(reactionTime[1]) ? item : null
+        })
+    }
+
+    static getByEpisode(episode_id, timestamp){
         return db('reactions').where({episode_id})
+            .then(allReactions => {
+                return timestamp ? this.filterByTimestamp(allReactions, timestamp) : allReactions
+            })    
             .then(reactions => {
-                    // create an array of promises to resolve reaction ids into userInfo
+                console.log('.... after the dubious then', reactions)
                     const promises = []
-                    reactions.forEach(reaction => {
-                        let promise = this.getUserInfo(reaction.user_id)
+                     // create an array of userInfo for each promise
+                    reactions.forEach(reactionPromise => {
+                        let promise = this.getUserInfo(reactionPromise.user_id)
                         promises.push(promise)
                     })
-                    // return an array of userInfo for each promise
+                //    return userInfo for each promise and map it onto the reaction
                     return Promise.all(promises).then(userInfo => {
                         reactions.map((reaction, i) => {
                             reaction.userInfo = userInfo[i]
                             return reaction
                         })
-                        console.log(reactions)
+                    // returning with userInfo attached here
                         return reactions
                     })
 
                 })
-                
+            
     }
 
 }

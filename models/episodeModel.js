@@ -48,7 +48,7 @@ class EpisodeModel{
                     })
     }
     static getByPodcast(podcast_id){
-        return db('podcasts').where({id}).first()
+        return db('podcasts').where({podcast_id}).first()
     }
 
     static create(data){

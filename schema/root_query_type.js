@@ -58,7 +58,8 @@ const RootQueryType = new GraphQLObjectType({
         },
         episode: {
             type: EpisodeType,
-            args: { id : { type: new GraphQLNonNull(GraphQLID)} },
+            args: { id : { type: new GraphQLNonNull(GraphQLID)},
+                    timestamp: { type: GraphQLString } },
             resolve(parentValue, args, ctx){
                 return episodeModel.getOne(args.id)
             }
@@ -74,6 +75,18 @@ const RootQueryType = new GraphQLObjectType({
             args: { id : { type: new GraphQLNonNull(GraphQLID)}},
             resolve(parentValue, args, ctx){
                 return reactionModel.getOne(args.id)
+            }
+        },
+        timedReactions : {
+            type : new GraphQLList(ReactionType),
+            args: { id : { type : GraphQLID},
+                    timestamp: { type : GraphQLString }},
+            resolve(parentValue, args) {
+                return reactionModel.getByEpisode(args.id, args.timestamp)
+                .then(reactions => {
+                    console.log(reactions)
+                    return reactions
+                })
             }
         },
         newPod :{

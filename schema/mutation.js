@@ -12,9 +12,11 @@ const UserType = require('./user_type')
 const PodcastType = require('./podcast_type')
 const NewPodcastType = require('./new_podcast_type')
 const ReactionType = require('./reaction_type')
+const EpisodeType = require('./episode_type')
 const userModel = require('../models/userModel')
 const podcastModel = require('../models/podcastModel')
 const reactionModel = require('../models/reactionModel')
+const episodeModel = require('../models/episodeModel')
 const auth = require('../authService')
 
 const mutation = new GraphQLObjectType({
@@ -101,6 +103,26 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parentValue, args){
                 return reactionModel.create(args)
+            }
+        },
+        episodeTimestamp : {
+            type: EpisodeType,
+            args: {
+                id: { type: GraphQLID },
+                timestamp: { type : GraphQLInt }
+            },
+            resolve(parentValue,  {id, timestamp }){
+                console.log('time in resolver',timestamp)
+                return episodeModel.getOne(id)
+                    .then(episodeData => {
+                        console.log('after the first call', timestamp)
+                        return reactionModel.getByEpisode(id, timestamp)
+                            .then(reactions => {
+                                episodeData.reactions = reactions
+                                // console.log('wait, what',episodeData)
+                                return episodeData
+                            })
+                    })
             }
         }
     }

@@ -39,7 +39,7 @@ exports.seed = function(knex, Promise) {
           user_id: 3,
           episode_id: 1,
           episode_timestamp: '00:12:17',
-          content: 'Tumeric austin lo-fi, heirloom cronut narwhal jianbing. Shaman cred occupy, vice keytar knausgaard man braid. Sustainable offal austin, twee lomo neutra glossier fixie pug taxidermy hell of prism tousled hot chicken. Slow-carb umami vape retro kickstarter. Cold-pressed vexillologist enamel pin meditation.'},
+          content: 'Tumeric austin lo-fi, heirloom cronut narwhal jianbing. Shaman cred occupy, vice keytar knausgaard man braid. Sustainable offal austin, twee lomo neutra glossier fixie pug taxidermy hell of prism tousled hot chicken.'},
           {id: 8, 
           user_id: 2,
           episode_id: 1,
