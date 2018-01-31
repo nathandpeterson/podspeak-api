@@ -1,5 +1,7 @@
 
 const reactionModel = require('../models/reactionModel.js')
+const userModel = require('../models/userModel')
+const UserType = require('./user_type')
 const graphql = require('graphql')
 const {
     GraphQLObjectType,
@@ -19,9 +21,8 @@ const ReactionType = new GraphQLObjectType({
         episode_id: {type: GraphQLID },
         episode_timestamp: {type: GraphQLString },
         category: { type: GraphQLInt },
-        content: { type: GraphQLString}
-        // This will fetch reactions for an episode
-        
+        content: { type: GraphQLString},
+        userInfo: {type: GraphQLString}        
     })
 })
 

@@ -73,6 +73,7 @@ const RootQueryType = new GraphQLObjectType({
             type: ReactionType,
             args: { id : { type: new GraphQLNonNull(GraphQLID)}},
             resolve(parentValue, args, ctx){
+                console.log('... hit the rootquery', parentValue, args)
                 return reactionModel.getOne(args.id)
             }
         },

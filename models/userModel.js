@@ -6,6 +6,7 @@ class UserModel {
         return db('users')
     }
     static getOne(id){
+        console.log(id)
         return db('users').where({id}).first()    
     }
     static async getWithEmail(email){
