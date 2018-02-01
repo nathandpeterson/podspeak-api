@@ -11,7 +11,9 @@ class PodcastModel {
         return db('podcasts')
     }
     static create(data){
-        return db('podcasts').insert(data, '*').first()
+        //This should do a find or create in order to avoid duplicating records
+        return db('podcasts').insert(data, '*')
+            .then(result => result[0])
     }
     static update(data){
         return db('users').where({id}).update(data)
@@ -25,7 +27,8 @@ class PodcastModel {
         return db('user_podcast').where({user_id , podcast_id})
             .then(check => {
                 return check.length ? {message: 'User is already subscribed'} : 
-                    db('user_podcast').insert({user_id , podcast_id}, '*').first()
+                    db('user_podcast').insert({user_id , podcast_id}, '*')
+                        .then(result => result[0])
             })
     }
 

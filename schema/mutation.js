@@ -87,7 +87,12 @@ const mutation = new GraphQLObjectType({
                 delete podcastData.user_id
                 return podcastModel.create(podcastData)
                     .then(newPodcast => {
+                        console.log('should be newPodcast', newPodcast.id, args.user_id)
                         return podcastModel.addUserPodcast(args.user_id, newPodcast.id)
+                            .then(res => {
+                                console.log(res)
+                                return res
+                            })
                     })
             }
         },
@@ -112,10 +117,8 @@ const mutation = new GraphQLObjectType({
                 timestamp: { type : GraphQLInt }
             },
             resolve(parentValue,  {id, timestamp }){
-                console.log('time in resolver',timestamp)
                 return episodeModel.getOne(id)
                     .then(episodeData => {
-                        console.log('after the first call', timestamp)
                         return reactionModel.getByEpisode(id, timestamp)
                             .then(reactions => {
                                 episodeData.reactions = reactions
