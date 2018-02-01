@@ -6,7 +6,6 @@ class UserModel {
         return db('users')
     }
     static getOne(id){
-        console.log(id)
         return db('users').where({id}).first()    
     }
     static async getWithEmail(email){
@@ -28,8 +27,6 @@ class UserModel {
         if (emailTaken) return {error: 'That email is taken'}
         // Sends to authService to hash password and delete plaintext password
         let hashedData = await auth.signup(data)
-        // Adds active propery to data
-        hashedData.active = true
         return db('users').insert(hashedData)
             .then(()=> {
                 return db('users').where({email:hashedData.email})

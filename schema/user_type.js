@@ -21,8 +21,6 @@ const UserType = new GraphQLObjectType({
         first_name: { type : GraphQLString },
         last_name: { type : GraphQLString },
         avatar: { type : GraphQLString },
-        active: { type : GraphQLBoolean },
-        privacy: { type : GraphQLInt},
         token: { type : GraphQLString },
         error: { type: GraphQLString},
         podcasts: { 

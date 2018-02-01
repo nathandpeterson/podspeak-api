@@ -30,7 +30,6 @@ const mutation = new GraphQLObjectType({
                 first_name: { type : GraphQLString },
                 last_name: { type : GraphQLString },
                 avatar: { type : GraphQLString },
-                privacy: { type : GraphQLInt}
             },
             resolve(parentValue, args, req){
                 return userModel.create(args, req)
@@ -47,8 +46,6 @@ const mutation = new GraphQLObjectType({
                 first_name: { type : GraphQLString },
                 last_name: { type : GraphQLString },
                 avatar: { type : GraphQLString },
-                active: { type : GraphQLBoolean },
-                privacy: { type : GraphQLInt}
             },
             resolve(parentValue, {email, password}, ctx){
                 // Returns a token if password is correct and user is in db
@@ -87,7 +84,6 @@ const mutation = new GraphQLObjectType({
                 delete podcastData.user_id
                 return podcastModel.create(podcastData)
                     .then(newPodcast => {
-                        console.log('should be newPodcast', newPodcast.id, args.user_id)
                         return podcastModel.addUserPodcast(args.user_id, newPodcast.id)
                             .then(res => {
                                 console.log(res)
