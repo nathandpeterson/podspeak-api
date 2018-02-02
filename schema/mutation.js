@@ -118,6 +118,16 @@ const mutation = new GraphQLObjectType({
                             })
                     })
             }
+        },
+        deleteUserPodcast: {
+            type: PodcastType,
+            args: {
+                user_id: { type: GraphQLID},
+                podcast_id: { type: GraphQLID }
+            },
+            resolve(parentValue, args){
+                return podcastModel.deleteUserPodcast(args.user_id, args.podcast_id)
+            }
         }
     }
 })

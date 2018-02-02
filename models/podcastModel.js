@@ -31,6 +31,9 @@ class PodcastModel {
                         .then(result => result[0])
             })
     }
+    static deleteUserPodcast(user_id, podcast_id){
+        return db('user_podcast').where({user_id , podcast_id}).del()
+    }
 
     static prune(data){
         const format =  {rss_feed: data.rss,
