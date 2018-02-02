@@ -4,16 +4,22 @@ const podcastGenres = require('./podcastGenres')
 
 
 class PodcastModel {
-    static async getOne(id, page){
+    static getOne(id){
         return db('podcasts').where({id}).first()
+    }
+    static getByTitle(title) {
+        return db('podcasts').where({title}).first()
     }
     static getAll(){
         return db('podcasts')
     }
     static create(data){
-        //This should do a find or create in order to avoid duplicating records
-        return db('podcasts').insert(data, '*')
-            .then(result => result[0])
+        return this.getByTitle(data.title)
+            .then(result => {
+                return result ? result : 
+                    db('podcasts').insert(data, '*')
+                    .then(result => result[0])
+            })
     }
     static update(data){
         return db('users').where({id}).update(data)
