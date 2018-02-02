@@ -43,7 +43,6 @@ class ReactionModel{
                 return timestamp ? this.filterByTimestamp(allReactions, timestamp) : allReactions
             })    
             .then(reactions => {
-                console.log('.... after the dubious then', reactions)
                     const promises = []
                      // create an array of userInfo for each promise
                     reactions.forEach(reactionPromise => {

@@ -83,10 +83,6 @@ const RootQueryType = new GraphQLObjectType({
                     timestamp: { type : GraphQLString }},
             resolve(parentValue, args) {
                 return reactionModel.getByEpisode(args.id, args.timestamp)
-                .then(reactions => {
-                    console.log(reactions)
-                    return reactions
-                })
             }
         },
         newPod :{

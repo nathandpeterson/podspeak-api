@@ -26,7 +26,8 @@ const PodcastType = new GraphQLObjectType({
         episodes: {type: new GraphQLList(EpisodeType),
         resolve(parentValue, args){
             return episodeModel.getFeed(parentValue)
-        }}
+            }
+        }
     })
 })
 

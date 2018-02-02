@@ -85,10 +85,6 @@ const mutation = new GraphQLObjectType({
                 return podcastModel.create(podcastData)
                     .then(newPodcast => {
                         return podcastModel.addUserPodcast(args.user_id, newPodcast.id)
-                            .then(res => {
-                                console.log(res)
-                                return res
-                            })
                     })
             }
         },
@@ -118,7 +114,6 @@ const mutation = new GraphQLObjectType({
                         return reactionModel.getByEpisode(id, timestamp)
                             .then(reactions => {
                                 episodeData.reactions = reactions
-                                // console.log('wait, what',episodeData)
                                 return episodeData
                             })
                     })

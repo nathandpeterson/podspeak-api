@@ -30,12 +30,9 @@ const EpisodeType = new GraphQLObjectType({
         },
         timeReactions: { type: new GraphQLList(ReactionType),
             resolve(parentValue, args){
-                console.log('in timeREACTION ----', args)
                 return reactionModel.getByEpisode(args.id, args.timestamp)
                             .then(reactions => {
-                                console.log(reactions)
                                 episodeData.reactions = reactions
-                                // console.log('wait, what',episodeData)
                                 return episodeData
                             })
             }
