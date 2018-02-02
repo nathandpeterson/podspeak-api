@@ -125,8 +125,11 @@ const mutation = new GraphQLObjectType({
                 user_id: { type: GraphQLID},
                 podcast_id: { type: GraphQLID }
             },
-            resolve(parentValue, args){
-                return podcastModel.deleteUserPodcast(args.user_id, args.podcast_id)
+            resolve(parentValue, args, ctx){
+                // Use ctx to authenticate... that the user is the right user.
+                const verification = auth.verifyToken(ctx.headers.authorization)
+                return !verification.id === parseInt(args.id) ? { error : 'Hm... somethiing went wrong'} :
+                     podcastModel.deleteUserPodcast(args.user_id, args.podcast_id)
             }
         }
     }
