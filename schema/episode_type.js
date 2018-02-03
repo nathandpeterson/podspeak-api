@@ -1,5 +1,7 @@
 const ReactionType = require('./reaction_type')
+const PodcastType = require('./podcast_type')
 const reactionModel = require('../models/reactionModel')
+const podcastModel = require('../models/podcastModel')
 const graphql = require('graphql')
 
 const {
@@ -35,6 +37,13 @@ const EpisodeType = new GraphQLObjectType({
                                 episodeData.reactions = reactions
                                 return episodeData
                             })
+            }
+        },
+        podcast_name : { type: GraphQLString,
+        resolve(parentValue, args){
+            console.log(parentValue)
+            return podcastModel.getOne(parentValue.podcast_id)
+                .then(end => end.title)
             }
         }
     })

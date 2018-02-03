@@ -5,7 +5,8 @@ const podcastGenres = require('./podcastGenres')
 
 class PodcastModel {
     static getOne(id){
-        return db('podcasts').where({id}).first()
+        return db('podcasts').where({id})
+            .then(result => result[0])
     }
     static getByTitle(title) {
         return db('podcasts').where({title}).first()
