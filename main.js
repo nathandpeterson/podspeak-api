@@ -15,7 +15,7 @@ const expressGraphQL = require('express-graphql')
 const schema = require('./schema/schema')
 app.use('/graphql', expressGraphQL({
   schema,
-  graphiql: true
+  graphiql: false
 }))
 
 const router = require('./router.js')

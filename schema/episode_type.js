@@ -41,7 +41,6 @@ const EpisodeType = new GraphQLObjectType({
         },
         podcast_name : { type: GraphQLString,
         resolve(parentValue, args){
-            console.log(parentValue)
             return podcastModel.getOne(parentValue.podcast_id)
                 .then(end => end.title)
             }
