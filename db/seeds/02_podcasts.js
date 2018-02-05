@@ -45,13 +45,11 @@ exports.seed = function(knex, Promise) {
           rss_feed: 'http://feeds.feedburner.com/voxtheweeds',
           latest_pub_date: 'Tue, 16 Jan 2018 22:23:34 -0000',
           website: 'https://www.vox.com/the-weeds'},
-          {id: 7, 
-          title: 'Unladylike',
-          image_URL: 'https://dfkfj8j276wwv.cloudfront.net/images/3d/1f/2f/b8/3d1f2fb8-d5dc-4ef8-a35a-d18782320257/2f63f2cc02cdb6f69980e4af3a79e935c626bea560eb92fcd08660f9d3131c016121fbd6a30b18fc8f5431c000234658456b44a98cc8d3b06d1d153a18881fe0.jpeg',
-          description: 'Find out what happens when women break the rules - those unwritten but all too real bullsh*t expectations of how we should live our lives. Cristen Conger and Caroline Ervin (formerly Stuff Mom Never Told You) tackle questions through their trademark obsessive research, stories from rule-breakin’ ladies and a solid dose of delightful feminist rage',
-          rss_feed: 'https://rss.art19.com/unladylike',
-          latest_pub_date: 'Tue, 30 Jan 2018 08:00:00 -0000',
-          website: 'http://www.unladylike.co'},
+          {id: 7,
+          title: 'Slate Audio Book Club',
+          image_URL: 'http://static.megaphone.fm/podcasts/30836968-8289-11e5-b42a-8b58d75e4327/image/uploads_2F1516106489105-h4f6038a6p-fa3e6d340872c743db8217528232fb09_2F01_Slate_Redux_Podcast_Cover_Audio-Book-Club.jpg',
+          rss_feed: 'http://feeds.feedburner.com/SlateAudioBookClub',
+          description: 'Join Slate\'s critics for monthly discussions of new and important books. Read the book club selections and then listen in as our critics hold lively - and sometimes heated - debates about the works. Part of the Panoply Network.'},
           { id: 8,
           title: 'S-Town',
           image_URL: 'https://upload.wikimedia.org/wikipedia/en/b/bd/S-Town_cover_art.jpg',
@@ -116,11 +114,7 @@ exports.seed = function(knex, Promise) {
           rss_feed: 'https://rss.art19.com/tim-ferriss-show',
           latest_pub_date: 'Thu, 18 Jan 2018 20:48:21 -0000',
           website: 'https://tim.blog/podcast/'},
-          {id: 18,
-          title: 'Slate Audio Book Club',
-          image_URL: 'http://static.megaphone.fm/podcasts/30836968-8289-11e5-b42a-8b58d75e4327/image/uploads_2F1516106489105-h4f6038a6p-fa3e6d340872c743db8217528232fb09_2F01_Slate_Redux_Podcast_Cover_Audio-Book-Club.jpg',
-          rss_feed: 'http://feeds.feedburner.com/SlateAudioBookClub',
-          description: 'Join Slate\'s critics for monthly discussions of new and important books. Read the book club selections and then listen in as our critics hold lively - and sometimes heated - debates about the works. Part of the Panoply Network.'},
+         
 
       ])
     }).then(() => {
