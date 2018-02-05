@@ -18,9 +18,6 @@ app.use('/graphql', expressGraphQL({
   graphiql: false
 }))
 
-const router = require('./router.js')
-app.use('/api', router)
-
 app.use('/', (req, res, next) => {
     res.json({message: 'Hello, you hit the route root.'})
   })

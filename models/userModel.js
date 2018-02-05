@@ -17,10 +17,7 @@ class UserModel {
                 return res ? res : false
             })
     }
-    static update(id, data){
-        // Placeholder; data should be verified 
-        return db('users').where({id}).update(data)
-    }
+   
     static async create(data, req){
         //Checks if email is taken. True means email is taken, false it is not.
         const emailTaken = await this.checkEmail(data.email)
@@ -49,7 +46,6 @@ class UserModel {
         const token = await auth.newToken(userData)
         return {...userData, token}
        }
-        // If no user, send them to a signup form
     }
 }
 
