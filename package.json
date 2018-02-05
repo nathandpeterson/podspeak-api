@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
+    "dev": "nodemon main",
     "knex": "knex",
     "refresh": "dropdb pod_dev && createdb pod_dev",
     "reseed": "knex migrate:latest && knex seed:run"
@@ -27,7 +28,8 @@
     "jwks-rsa": "^1.2.1",
     "knex": "^0.14.2",
     "morgan": "^1.9.0",
-    "pg": "^7.4.1"
+    "pg": "^7.4.1",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.14.11"
