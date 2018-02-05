@@ -6,6 +6,9 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('user_podcast').insert([
         {podcast_id: 15, user_id: 1},
+        {podcast_id: 17, user_id: 1},
+        {podcast_id: 14, user_id: 1},
+        {podcast_id: 11, user_id: 1},
         {podcast_id: 1, user_id: 2},
         {podcast_id: 1, user_id: 3},
         {podcast_id: 4, user_id: 2},
