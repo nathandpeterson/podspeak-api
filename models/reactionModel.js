@@ -27,25 +27,6 @@ class ReactionModel{
             .then(allReactions => {
                 return timestamp ? this.filterByTimestamp(allReactions, timestamp) : allReactions
             })
-            // .then(reactions => {
-            //         const promises = []
-            //          // create an array of userInfo for each promise
-            //         reactions.forEach(reactionPromise => {
-            //             let promise = this.getUserInfo(reactionPromise.user_id)
-            //             promises.push(promise)
-            //         })
-            //     //    return userInfo for each promise and map it onto the reaction
-            //         return Promise.all(promises).then(userInfo => {
-            //             reactions.map((reaction, i) => {
-            //                 reaction.userInfo = userInfo[i]
-            //                 return reaction
-            //             })
-            //         // returning with userInfo attached here
-            //             return reactions
-            //         })
-            //
-            //     })
-
     }
 
 }
