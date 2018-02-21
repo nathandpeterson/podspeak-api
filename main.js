@@ -15,19 +15,19 @@ const expressGraphQL = require('express-graphql')
 const schema = require('./schema/schema')
 app.use('/graphql', expressGraphQL({
   schema,
-  graphiql: false
+  graphiql: true
 }))
 
 app.use('/', (req, res, next) => {
     res.json({message: 'Hello, you hit the route root.'})
   })
-  
+
   app.use((req, res, next) => {
       const status = 404
       const message = `Could not find route matching: ${req.method} ${req.path}`
       next({ status, message })
     })
-    
+
     app.use((err, req, res, next) => {
       if (!process.env.NODE_ENV) console.log(err)
       const status = err.status || 500

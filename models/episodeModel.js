@@ -31,7 +31,7 @@ class EpisodeModel{
                 } else {
                 return db('episodes').insert(data, '*')
                     .then(newEpisode => newEpisode[0])
-                }  
+                }
             })
     }
     static getFeed(data){
